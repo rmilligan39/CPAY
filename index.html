@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corpay (CPAY) — 10-Year Performance Report</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f0f0f;color:#e5e5e5;font-family:'Segoe UI','Inter',system-ui,sans-serif;line-height:1.6}
+:root{--gold:#AD9551;--lgold:#d4bc7c;--cyan:#22d3ee;--purple:#a855f7;--blue:#3b82f6;--red:#dc2626;--green:#16a34a;--gray:#6b7280}
+.header{background:linear-gradient(135deg,#1a1a1a,#1f1f1f);border-bottom:3px solid var(--gold);padding:28px 32px}
+.header-row{display:flex;align-items:center;gap:16px;margin-bottom:8px;flex-wrap:wrap}
+.ticker-badge{width:48px;height:48px;border-radius:8px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#1a1a1a;flex-shrink:0}
+.header h1{font-size:24px;font-weight:800;color:#fff;letter-spacing:-0.5px}
+.header .sub{color:var(--lgold);font-size:13px;margin-top:4px}
+.header .meta{color:var(--gray);font-size:12px;margin-top:10px}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.chart-toggles{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.chart-toggles button{padding:8px 18px;border-radius:6px;font-weight:600;font-size:13px;cursor:pointer;transition:all .2s;border:1px solid #333;background:transparent;color:#ccc}
+.chart-toggles button.active{border-color:var(--gold);background:var(--gold);color:#1a1a1a}
+.chart-box{background:#161616;border-radius:12px;border:1px solid #2a2a2a;padding:20px 16px 12px;margin-bottom:24px}
+.chart-box canvas{width:100%!important;max-height:400px}
+.chart-caption{color:#555;font-size:11px;text-align:center;margin-top:8px}
+h2{color:var(--gold);font-size:18px;font-weight:700;margin-bottom:10px;border-bottom:1px solid #333;padding-bottom:8px}
+.tbl-wrap{overflow-x:auto;margin-bottom:28px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{padding:8px 8px;text-align:right;color:var(--lgold);font-weight:700;font-size:11px;white-space:nowrap;border-bottom:2px solid var(--gold)}
+td{padding:7px 8px;text-align:right;border-bottom:1px solid #1f1f1f}
+tr:nth-child(even){background:#131313}
+.ctx{text-align:left!important;color:#888;font-size:11px}
+.pos{color:var(--green);font-weight:600}.neg{color:var(--red);font-weight:600}
+.yr{font-weight:700;color:#fff}
+.gold{color:var(--gold);font-weight:700}.cyn{color:var(--cyan);font-weight:700}
+.badge{padding:2px 10px;border-radius:12px;font-weight:700;font-size:10px;color:#1a1a1a;display:inline-block}
+.badge-red{background:var(--red)}.badge-orange{background:#f97316}.badge-yellow{background:#eab308}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin-bottom:24px}
+.metric{background:#161616;border:1px solid #2a2a2a;border-radius:8px;padding:12px 14px;text-align:center}
+.metric .lbl{color:var(--gray);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.metric .val{color:var(--gold);font-size:20px;font-weight:800;margin:3px 0 2px}
+.metric .sub{color:#555;font-size:10px}
+.nav-tabs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
+.nav-tabs button{padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #333;background:transparent;color:#bbb;transition:all .2s}
+.nav-tabs button.active{border-color:var(--gold);background:var(--gold);color:#1a1a1a}
+.section-box{background:#161616;border-radius:10px;border:1px solid #2a2a2a;padding:22px 26px;margin-bottom:24px}
+.section-box h3{color:var(--gold);font-size:16px;font-weight:700;margin-bottom:12px}
+.section-box p{color:#d4d4d4;line-height:1.7;font-size:13.5px;margin-bottom:12px}
+.tbl-note{color:#555;font-size:11px;margin-top:8px}
+.footer{border-top:1px solid #333;padding-top:14px;color:#555;font-size:10px;line-height:1.6;margin-top:8px}
+@media(max-width:700px){.header h1{font-size:18px}.container{padding:12px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-row">
+    <div class="ticker-badge">CPAY</div>
+    <div>
+      <h1>Corpay (CPAY) — 10-Year Performance Report</h1>
+      <div class="sub">Formerly FleetCor Technologies (FLT) • NYSE: CPAY • S&P 500 Member</div>
+    </div>
+  </div>
+  <div class="meta">Prepared March 10, 2026 • Benchmarks: S&P 500, Visa (V), XLF • Prices approximate year-end closes; 2026E = guidance/YTD</div>
+</div>
+
+<div class="container">
+
+<!-- Chart Toggle -->
+<div class="chart-toggles">
+  <button class="active" onclick="showChart('fundamental')">Revenue/Share + EV/EBITDA</button>
+  <button onclick="showChart('indexed')">Indexed Price (Base = 100)</button>
+</div>
+
+<div class="chart-box">
+  <div id="chart-fund" style="position:relative;max-height:420px"><canvas id="fundChart"></canvas></div>
+  <div id="chart-idx" style="position:relative;max-height:420px;display:none"><canvas id="idxChart"></canvas></div>
+  <div class="chart-caption" id="chartCaption">Revenue/Share has tripled since 2016 while EV/EBITDA compressed from ~18x to ~12x — the market is paying less per dollar of growing earnings.</div>
+</div>
+
+<!-- Fundamental Table -->
+<h2>Revenue Per Share & Valuation History</h2>
+<div class="tbl-wrap" id="fundTable"></div>
+<p class="tbl-note">Revenue/Share grew 217% (2016→2025) while price grew 106%. The gap = multiple compression. EBITDA from SEC filings; EV/EBITDA estimated from market cap + net debt. 2026E reflects company guidance.</p>
+<br>
+
+<!-- YoY Returns Table -->
+<h2>Year-over-Year Price Returns</h2>
+<div class="tbl-wrap" id="returnsTable"></div>
+
+<!-- Cumulative Returns -->
+<h2>Cumulative Total Return Summary</h2>
+<div class="tbl-wrap" id="cumTable"></div>
+
+<!-- Key Metrics -->
+<div class="metrics" id="metricsGrid"></div>
+
+<!-- Narrative -->
+<h2>Investment Analysis</h2>
+<div class="nav-tabs" id="navTabs"></div>
+<div class="section-box" id="sectionContent"></div>
+
+<!-- Footer -->
+<div class="footer">
+  <p><strong style="color:#666">Disclaimer:</strong> This report is for informational purposes only and does not constitute investment advice. Revenue, EBITDA, and share counts sourced from SEC filings, StockAnalysis, and MacroTrends. EV/EBITDA estimated from year-end market cap plus approximate net debt divided by reported EBITDA. GuruFocus reports 10-year range of 10.8x–24.2x with median 16.5x. 2026E reflects company guidance ($5.27B revenue midpoint, $26 adj. EPS). Past performance is not indicative of future results.</p>
+  <p style="margin-top:4px">Prepared for The Fedeli Group • Sources: SEC EDGAR, Yahoo Finance, StockAnalysis, GuruFocus, TradingView, Corpay Investor Relations</p>
+</div>
+
+</div>
+
+<script>
+const gold='#AD9551',cyan='#22d3ee',blue='#3b82f6',purple='#a855f7',red='#dc2626',green='#16a34a';
+
+const fundData=[
+  {year:"2016",rev:1830,shares:91,rps:20.1,ebitda:960,evE:18.2,price:163,eps:7.92,em:52.5},
+  {year:"2017",rev:2250,shares:89,rps:25.3,ebitda:1140,evE:19.8,price:205,eps:9.40,em:50.7},
+  {year:"2018",rev:2430,shares:88,rps:27.6,ebitda:1280,evE:15.4,price:190,eps:10.67,em:52.7},
+  {year:"2019",rev:2650,shares:86,rps:30.8,ebitda:1430,evE:21.5,price:290,eps:12.42,em:54.0},
+  {year:"2020",rev:2390,shares:85,rps:28.1,ebitda:1190,evE:18.4,price:272,eps:10.77,em:49.8},
+  {year:"2021",rev:2830,shares:84,rps:33.7,ebitda:1430,evE:14.2,price:242,eps:13.21,em:50.5},
+  {year:"2022",rev:3430,shares:77,rps:44.5,ebitda:1780,evE:10.8,price:183,eps:16.10,em:51.9},
+  {year:"2023",rev:3760,shares:74,rps:50.8,ebitda:1994,evE:13.8,price:268,eps:16.92,em:53.0},
+  {year:"2024",rev:3970,shares:72,rps:55.1,ebitda:2129,evE:15.8,price:330,eps:19.01,em:53.6},
+  {year:"2025",rev:4530,shares:71,rps:63.8,ebitda:2430,evE:14.2,price:335,eps:21.38,em:53.6},
+  {year:"2026E",rev:5270,shares:70,rps:75.3,ebitda:2860,evE:11.9,price:315,eps:26.00,em:54.3}
+];
+
+const priceBase={cpay:163,spx:2239,v:78.02,xlf:23.55};
+const priceData=[
+  {y:"2016",c:163,s:2239,v:78.02,x:23.55},{y:"2017",c:205,s:2674,v:114.02,x:27.86},
+  {y:"2018",c:190,s:2507,v:131.94,x:23.57},{y:"2019",c:290,s:3231,v:187.90,x:30.14},
+  {y:"2020",c:272,s:3756,v:218.73,x:28.20},{y:"2021",c:242,s:4766,v:216.71,x:38.27},
+  {y:"2022",c:183,s:3840,v:207.89,x:33.28},{y:"2023",c:268,s:4770,v:260.35,x:37.70},
+  {y:"2024",c:330,s:5881,v:317.71,x:49.30},{y:"2025",c:335,s:5906,v:351.00,x:53.68},
+  {y:"2026*",c:315,s:5850,v:320,x:50.57}
+];
+
+const yoyReturns=[
+  {y:"2016",c:7.2,s:9.5,v:0.6,x:2.6,ctx:"Steady growth"},
+  {y:"2017",c:25.8,s:19.4,v:46.1,x:18.3,ctx:"Tax reform optimism"},
+  {y:"2018",c:-7.3,s:-6.2,v:15.7,x:-15.4,ctx:"Rate hikes / Vol spike"},
+  {y:"2019",c:52.6,s:28.9,v:42.4,x:27.9,ctx:"Bull run / Fed pivot"},
+  {y:"2020",c:-6.2,s:16.3,v:16.4,x:-6.4,ctx:"COVID crash & recovery"},
+  {y:"2021",c:-11.0,s:26.9,v:-0.9,x:35.7,ctx:"Reopening / inflation"},
+  {y:"2022",c:-24.4,s:-19.4,v:-3.4,x:-13.0,ctx:"FTC probe / rate shock"},
+  {y:"2023",c:46.4,s:24.2,v:25.2,x:13.3,ctx:"FTC settle / recovery"},
+  {y:"2024",c:23.1,s:23.3,v:22.0,x:30.8,ctx:"Rebrand / Corp Payments"},
+  {y:"2025",c:1.5,s:0.4,v:10.5,x:8.9,ctx:"ATH → pullback"},
+  {y:"2026*",c:-6.0,s:-0.9,v:-8.9,x:-5.8,ctx:"YTD through Mar 10"}
+];
+
+const cumReturns=[
+  {p:"1-Year",c:"-6% to -12%",s:"+8% to +18%",v:"-4% to -11%",x:"+2% to +5%",vd:"Underperform",vc:"badge-orange"},
+  {p:"3-Year",c:"~64%",s:"~79%",v:"~51%",x:"~50%",vd:"Mixed",vc:"badge-yellow"},
+  {p:"5-Year",c:"~10%",s:"~83%",v:"~64%",x:"~79%",vd:"Severe lag",vc:"badge-red"},
+  {p:"10-Year",c:"~107%",s:"~186%",v:"~313%",x:"~120%",vd:"Underperform",vc:"badge-orange"}
+];
+
+const metrics=[
+  {l:"Current Price",v:"~$315",s:"Mar 10, 2026"},{l:"Fwd P/E",v:"~12x",s:"$26 adj. EPS guide"},
+  {l:"EV/EBITDA (TTM)",v:"12.5x",s:"10Y median: 16.5x"},{l:"Rev/Share Growth",v:"3.2x",s:"$20 → $64 (2016–25)"},
+  {l:"Beta",v:"1.25",s:"Higher vol, lower return"},{l:"Debt/Equity",v:"201%",s:"Leverage: 2.8x"},
+  {l:"FY25 Revenue",v:"$4.53B",s:"+14% YoY"},{l:"EBITDA Margin",v:"~54%",s:"Stable & expanding"}
+];
+
+const sections=[
+  {id:"overview",t:"Executive Summary",c:`CPAY has delivered strong operational execution — 13.6% annualized revenue growth, 31% ROE, 14% EPS compounding — while generating one of the worst risk-adjusted stock returns among quality payments names over any meaningful time horizon. The stock carries a 1.25 beta but hasn't earned the volatility premium. Over five years, CPAY returned roughly 10% total versus the S&P 500's 83%, Visa's 64%, and XLF's 79%. That's a broken risk/return contract.`},
+  {id:"score",t:"1. The Scoreboard",c:`On a 1-year basis, CPAY has declined roughly 6–12% while the S&P 500 returned approximately 8–18% depending on the exact window. On a relative basis, CPAY has underperformed the S&P 500 by roughly 23 percentage points over the trailing year. Visa has also been weak at -4% to -11% TTM, but XLF held up better at roughly +2% to +5%.\n\nOn a 3-year cumulative basis, CPAY returned about 64% versus the S&P 500's 79%. That's a ~15-point gap but looks respectable only because of a favorable starting point — March 2023 was near the post-2022 trough. Visa's 3-year return was ~51%, XLF about 50%. CPAY actually beat its direct comps on a 3-year basis, even while lagging the broad market.\n\nOn a 5-year cumulative basis, the picture gets ugly. CPAY returned roughly 10% over five years vs. the S&P 500's 83%. That's a 73-point gap. Visa returned about 64%, and XLF returned about 79%. CPAY didn't just lag the market — it lagged everything by an embarrassing margin over a full cycle.`},
+  {id:"regime",t:"2. Regime Analysis",c:`In 2022, CPAY got destroyed — the stock fell roughly 30–35%. Three forces hit simultaneously: the Fed's aggressive rate hike cycle crushed payments multiples broadly; a high-profile FTC investigation created an idiosyncratic overhang; and FX headwinds from a strong dollar hit the company's significant international revenue (~40%). Think of this as a triple-whammy where macro, regulatory, and currency risk all correlated at once — the worst-case for a 1.25-beta stock.\n\nIn 2023–2024, CPAY staged an impressive recovery — roughly doubling from its 2022 trough to an all-time high near $400 by February 2025. The FTC investigation settled, the rebrand to Corpay signaled a narrative reset, and the company delivered 12% organic revenue growth and 21% adjusted EPS growth in FY2024.\n\nSince February 2025, the stock has given back a substantial chunk, falling from ~$400 to the ~$290–315 range. It currently trades about 14% below its 200-day moving average. The pattern is clear: CPAY outperforms in risk-on recoveries and underperforms in tightening/uncertainty regimes. It acts more like a specialty finance company than a network monopolist like Visa.`},
+  {id:"risk",t:"3. Risk/Return Profile",c:`Think of it this way: Visa is a toll booth on the global payments highway — it clips a fee on every transaction without credit risk. CPAY is more like a fleet of specialized trucks on that highway — managing fuel costs, route optimization, FX, credit risk on receivables, and regulatory scrutiny, all while collecting tolls that are structurally smaller and more complex to earn.\n\nCPAY carries a beta of 1.25, promising higher returns for bearing more volatility. The problem: realized 5-year return of ~10% cumulative (about 2% annualized) is well below Treasuries during this period. That's a broken risk/return contract.\n\nThe leverage amplifies this. Total debt-to-equity sits at ~201%, with a 2.8x leverage ratio. When macro tightens, CPAY's leverage magnifies downside in a way Visa never experiences. The 3-year beat against V and XLF is real but is a base-effect artifact — measured from a trough. From any pre-crash starting point, CPAY loses to both comps.`},
+  {id:"fund",t:"4. Fundamentals vs. Sentiment",c:`The fundamentals are genuinely strong. Full-year 2025 revenue hit $4.53B (up 14%, 10% organic), adjusted EPS grew 12% to $21.38. The Mastercard minority investment — $300M into the cross-border unit at a $13B valuation — is a strong institutional stamp. 2026 guidance calls for 16% revenue growth, adjusted EPS of $26 (beating estimates by 5.2%).\n\nYet the stock is flat-to-down. Three explanations:\n\nMultiple compression is the dominant force. The market has re-rated CPAY from ~25–28x forward earnings at peak to ~12–14x forward now. Ron Clarke's acquisition-heavy, adjusted-earnings-driven model triggers the "what's real here?" discount applied to rollup-style compounders.\n\nThe narrative is shifting from "payments" to "payments infrastructure vs. payments complexity." Visa and Mastercard own networks. CPAY operates on top with more moving parts, regulatory exposure, and execution risk. The market pays for simplicity.\n\nWhat's NOT being said: the aggressive acquisition strategy (Alpha Group, AvidXchange, GPS Capital Markets) is funded at exactly the wrong time — buying growth at 2.8x leverage when rates are elevated means paying more for capital while getting compressed multiples on acquisitions. Management's $75M cost savings target is the tell — they're buying revenue and cutting costs to make the math work.`},
+  {id:"so",t:"So What?",c:`The bull case: Consensus target of ~$379 implies ~17% upside. At $26 EPS in 2026, you're buying at ~12x forward earnings for 10–16% organic grower. Meaningful disconnect if growth persists.\n\nThe bear case: GAAP net income growth (6.58% in 2025) lags adjusted EPS meaningfully due to stock comp, amortization of acquired intangibles, and integration costs. 201% debt-to-equity means any stumble gets amplified. The stock price is roughly where it traded five years ago — the market has persistently refused to pay up.\n\nThe uncomfortable question: If CPAY had delivered identical financial performance under the ticker "V" or "MA" with the same balance sheet cleanliness, it would trade at 25–30x. The discount is structural, not cyclical — it won't change unless the company dramatically simplifies reporting, reduces leverage, or Clarke hands the reins to a successor who resets the narrative. The Mastercard cross-border investment may signal an eventual segment-level monetization event, but that's a 2–3 year option, not a 2026 catalyst.\n\nBottom line: Run the DuPont decomposition. CPAY's 31% ROE looks great, but back out the 2x leverage and you're looking at a more modest return on total capital. The ROIC filter is the right framework before committing here.`}
+];
+
+// --- RENDER CHARTS ---
+let fundChart, idxChart;
+
+function renderFundChart(){
+  const ctx=document.getElementById('fundChart').getContext('2d');
+  fundChart=new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:fundData.map(d=>d.year),
+      datasets:[
+        {label:'Revenue / Share',data:fundData.map(d=>d.rps),backgroundColor:fundData.map(d=>d.year==='2026E'?'rgba(34,211,238,0.35)':'rgba(34,211,238,0.7)'),borderRadius:4,yAxisID:'y',order:2},
+        {label:'EV / EBITDA',data:fundData.map(d=>d.evE),type:'line',borderColor:gold,backgroundColor:gold,pointBackgroundColor:gold,pointBorderColor:'#1a1a1a',pointBorderWidth:2,pointRadius:5,borderWidth:3,yAxisID:'y1',tension:0.3,order:1}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{labels:{color:'#ccc',font:{size:12}}},
+        tooltip:{
+          backgroundColor:'#1a1a1a',borderColor:gold,borderWidth:1,titleColor:gold,bodyColor:'#ccc',
+          callbacks:{
+            afterBody:function(ctx){
+              const i=ctx[0].dataIndex;const d=fundData[i];
+              return[`Revenue: $${(d.rev/1000).toFixed(2)}B`,`EBITDA: $${(d.ebitda/1000).toFixed(2)}B`,`Margin: ${d.em}%`,`Adj EPS: $${d.eps}`,`Price: $${d.price}`,`Shares: ${d.shares}M`];
+            }
+          }
+        },
+        annotation:{annotations:{medianLine:{type:'line',yMin:16.54,yMax:16.54,yScaleID:'y1',borderColor:'#555',borderDash:[6,4],borderWidth:1,label:{display:true,content:'10Y Median: 16.5x',position:'end',color:'#666',font:{size:10}}}}}
+      },
+      scales:{
+        x:{ticks:{color:'#6b7280',font:{size:12}},grid:{color:'#222'}},
+        y:{position:'left',ticks:{color:cyan,font:{size:11},callback:v=>'$'+v},grid:{color:'#222'},title:{display:true,text:'Rev / Share',color:cyan,font:{size:11}}},
+        y1:{position:'right',min:8,max:24,ticks:{color:gold,font:{size:11},callback:v=>v+'x'},grid:{drawOnChartArea:false},title:{display:true,text:'EV / EBITDA',color:gold,font:{size:11}}}
+      }
+    }
+  });
+}
+
+function renderIdxChart(){
+  const ctx=document.getElementById('idxChart').getContext('2d');
+  const idx=priceData.map(d=>({y:d.y,c:Math.round(d.c/priceBase.cpay*100),s:Math.round(d.s/priceBase.spx*100),v:Math.round(d.v/priceBase.v*100),x:Math.round(d.x/priceBase.xlf*100)}));
+  idxChart=new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:idx.map(d=>d.y),
+      datasets:[
+        {label:'CPAY',data:idx.map(d=>d.c),borderColor:gold,backgroundColor:gold,pointBackgroundColor:gold,borderWidth:3,pointRadius:4,tension:0.3},
+        {label:'S&P 500',data:idx.map(d=>d.s),borderColor:blue,pointBackgroundColor:blue,borderWidth:2,pointRadius:3,tension:0.3},
+        {label:'Visa (V)',data:idx.map(d=>d.v),borderColor:purple,pointBackgroundColor:purple,borderWidth:2,pointRadius:3,tension:0.3},
+        {label:'XLF',data:idx.map(d=>d.x),borderColor:cyan,pointBackgroundColor:cyan,borderWidth:2,pointRadius:3,tension:0.3}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{color:'#ccc',font:{size:12}}},tooltip:{backgroundColor:'#1a1a1a',borderColor:gold,borderWidth:1,titleColor:gold,bodyColor:'#ccc'}},
+      scales:{
+        x:{ticks:{color:'#6b7280',font:{size:12}},grid:{color:'#222'}},
+        y:{ticks:{color:'#999',font:{size:11}},grid:{color:'#222'},min:50,max:420}
+      }
+    }
+  });
+}
+
+function showChart(t){
+  document.querySelectorAll('.chart-toggles button').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  const f=document.getElementById('chart-fund'),i=document.getElementById('chart-idx'),cap=document.getElementById('chartCaption');
+  if(t==='fundamental'){f.style.display='block';i.style.display='none';cap.textContent="Revenue/Share has tripled since 2016 while EV/EBITDA compressed from ~18x to ~12x — the market is paying less per dollar of growing earnings.";}
+  else{f.style.display='none';i.style.display='block';cap.textContent="Indexed to 100 at year-end 2016. CPAY (gold) returned ~93% vs. S&P 500's 161%, Visa's 310%, and XLF's 115%.";}
+}
+
+// --- RENDER TABLES ---
+function rv(v){return v>0?`<span class="pos">+${v}%</span>`:v<0?`<span class="neg">${v}%</span>`:`<span>${v}%</span>`}
+function sp(a,b){const d=(a-b).toFixed(1);return d>0?`<span class="pos">+${d}pp</span>`:`<span class="neg">${d}pp</span>`}
+
+function renderFundTable(){
+  let h='<table><thead><tr>';
+  ['Year','Revenue','Shares (M)','Rev/Share','YoY Δ','EBITDA','Margin','EV/EBITDA','Adj. EPS','Price'].forEach(c=>h+=`<th>${c}</th>`);
+  h+='</tr></thead><tbody>';
+  fundData.forEach((d,i)=>{
+    const prev=i>0?fundData[i-1]:null;
+    const g=prev?((d.rps/prev.rps-1)*100).toFixed(1):null;
+    const gc=g===null?'':parseFloat(g)>0?'pos':'neg';
+    const op=d.year==='2026E'?'opacity:.7':'';
+    h+=`<tr style="${op}"><td class="yr">${d.year}</td><td>$${(d.rev/1000).toFixed(2)}B</td><td style="color:#999">${d.shares}</td><td class="cyn">$${d.rps.toFixed(2)}</td><td class="${gc}">${g===null?'—':(parseFloat(g)>0?'+':'')+g+'%'}</td><td>$${(d.ebitda/1000).toFixed(2)}B</td><td style="color:#999">${d.em.toFixed(1)}%</td><td class="gold">${d.evE.toFixed(1)}x</td><td>$${d.eps.toFixed(2)}</td><td style="color:#999">$${d.price}</td></tr>`;
+  });
+  h+='</tbody></table>';
+  document.getElementById('fundTable').innerHTML=h;
+}
+
+function renderReturnsTable(){
+  let h='<table><thead><tr>';
+  ['Year','CPAY','S&P 500','Visa (V)','XLF','vs. S&P','Context'].forEach((c,i)=>h+=`<th${i===6?' class="ctx"':''}>${c}</th>`);
+  h+='</tr></thead><tbody>';
+  yoyReturns.forEach(r=>{
+    h+=`<tr><td class="yr">${r.y}</td><td>${rv(r.c)}</td><td>${rv(r.s)}</td><td>${rv(r.v)}</td><td>${rv(r.x)}</td><td>${sp(r.c,r.s)}</td><td class="ctx">${r.ctx}</td></tr>`;
+  });
+  h+='</tbody></table>';
+  document.getElementById('returnsTable').innerHTML=h;
+}
+
+function renderCumTable(){
+  let h='<table><thead><tr>';
+  ['Period','CPAY','S&P 500','Visa (V)','XLF','Verdict'].forEach(c=>h+=`<th>${c}</th>`);
+  h+='</tr></thead><tbody>';
+  cumReturns.forEach(r=>{
+    h+=`<tr><td class="yr">${r.p}</td><td class="gold">${r.c}</td><td>${r.s}</td><td>${r.v}</td><td>${r.x}</td><td style="text-align:center"><span class="badge ${r.vc}">${r.vd}</span></td></tr>`;
+  });
+  h+='</tbody></table>';
+  document.getElementById('cumTable').innerHTML=h;
+}
+
+function renderMetrics(){
+  let h='';
+  metrics.forEach(m=>{h+=`<div class="metric"><div class="lbl">${m.l}</div><div class="val">${m.v}</div><div class="sub">${m.s}</div></div>`;});
+  document.getElementById('metricsGrid').innerHTML=h;
+}
+
+// --- NARRATIVE ---
+let activeSection='overview';
+function renderNav(){
+  let h='';
+  sections.forEach(s=>{h+=`<button class="${s.id===activeSection?'active':''}" onclick="setSection('${s.id}')">${s.t}</button>`;});
+  document.getElementById('navTabs').innerHTML=h;
+}
+function renderSection(){
+  const s=sections.find(x=>x.id===activeSection);
+  const ps=s.c.split('\n\n').map(p=>`<p>${p}</p>`).join('');
+  document.getElementById('sectionContent').innerHTML=`<h3>${s.t}</h3>${ps}`;
+}
+function setSection(id){activeSection=id;renderNav();renderSection();}
+
+// --- INIT ---
+window.addEventListener('DOMContentLoaded',()=>{
+  renderFundChart();renderIdxChart();
+  renderFundTable();renderReturnsTable();renderCumTable();
+  renderMetrics();renderNav();renderSection();
+});
+</script>
+</body>
+</html>
