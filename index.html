@@ -2,313 +2,488 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Corpay (CPAY) — 10-Year Performance Report</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SYK — Stryker Corporation | Investment Analysis</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0f0f0f;color:#e5e5e5;font-family:'Segoe UI','Inter',system-ui,sans-serif;line-height:1.6}
-:root{--gold:#AD9551;--lgold:#d4bc7c;--cyan:#22d3ee;--purple:#a855f7;--blue:#3b82f6;--red:#dc2626;--green:#16a34a;--gray:#6b7280}
-.header{background:linear-gradient(135deg,#1a1a1a,#1f1f1f);border-bottom:3px solid var(--gold);padding:28px 32px}
-.header-row{display:flex;align-items:center;gap:16px;margin-bottom:8px;flex-wrap:wrap}
-.ticker-badge{width:48px;height:48px;border-radius:8px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#1a1a1a;flex-shrink:0}
-.header h1{font-size:24px;font-weight:800;color:#fff;letter-spacing:-0.5px}
-.header .sub{color:var(--lgold);font-size:13px;margin-top:4px}
-.header .meta{color:var(--gray);font-size:12px;margin-top:10px}
-.container{max-width:1100px;margin:0 auto;padding:20px}
-.chart-toggles{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.chart-toggles button{padding:8px 18px;border-radius:6px;font-weight:600;font-size:13px;cursor:pointer;transition:all .2s;border:1px solid #333;background:transparent;color:#ccc}
-.chart-toggles button.active{border-color:var(--gold);background:var(--gold);color:#1a1a1a}
-.chart-box{background:#161616;border-radius:12px;border:1px solid #2a2a2a;padding:20px 16px 12px;margin-bottom:24px}
-.chart-box canvas{width:100%!important;max-height:400px}
-.chart-caption{color:#555;font-size:11px;text-align:center;margin-top:8px}
-h2{color:var(--gold);font-size:18px;font-weight:700;margin-bottom:10px;border-bottom:1px solid #333;padding-bottom:8px}
-.tbl-wrap{overflow-x:auto;margin-bottom:28px}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{padding:8px 8px;text-align:right;color:var(--lgold);font-weight:700;font-size:11px;white-space:nowrap;border-bottom:2px solid var(--gold)}
-td{padding:7px 8px;text-align:right;border-bottom:1px solid #1f1f1f}
-tr:nth-child(even){background:#131313}
-.ctx{text-align:left!important;color:#888;font-size:11px}
-.pos{color:var(--green);font-weight:600}.neg{color:var(--red);font-weight:600}
-.yr{font-weight:700;color:#fff}
-.gold{color:var(--gold);font-weight:700}.cyn{color:var(--cyan);font-weight:700}
-.badge{padding:2px 10px;border-radius:12px;font-weight:700;font-size:10px;color:#1a1a1a;display:inline-block}
-.badge-red{background:var(--red)}.badge-orange{background:#f97316}.badge-yellow{background:#eab308}
-.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin-bottom:24px}
-.metric{background:#161616;border:1px solid #2a2a2a;border-radius:8px;padding:12px 14px;text-align:center}
-.metric .lbl{color:var(--gray);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-.metric .val{color:var(--gold);font-size:20px;font-weight:800;margin:3px 0 2px}
-.metric .sub{color:#555;font-size:10px}
-.nav-tabs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
-.nav-tabs button{padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #333;background:transparent;color:#bbb;transition:all .2s}
-.nav-tabs button.active{border-color:var(--gold);background:var(--gold);color:#1a1a1a}
-.section-box{background:#161616;border-radius:10px;border:1px solid #2a2a2a;padding:22px 26px;margin-bottom:24px}
-.section-box h3{color:var(--gold);font-size:16px;font-weight:700;margin-bottom:12px}
-.section-box p{color:#d4d4d4;line-height:1.7;font-size:13.5px;margin-bottom:12px}
-.tbl-note{color:#555;font-size:11px;margin-top:8px}
-.footer{border-top:1px solid #333;padding-top:14px;color:#555;font-size:10px;line-height:1.6;margin-top:8px}
-@media(max-width:700px){.header h1{font-size:18px}.container{padding:12px}}
+:root{--bg:#0f0f0f;--card:#161616;--border:#2a2a2a;--gold:#AD9551;--cyan:#22d3ee;--txt:#e4e4e4;--mut:#777;--grn:#22c55e;--red:#ef4444;--ylw:#eab308;--org:#f97316}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:14px;line-height:1.65}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 18px}
+
+/* HEADER */
+.hdr{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:26px 30px;margin-bottom:18px;display:flex;align-items:flex-start;gap:22px;flex-wrap:wrap}
+.badge{background:var(--gold);color:#000;font-weight:900;font-size:22px;letter-spacing:1px;padding:9px 20px;border-radius:6px;align-self:center;white-space:nowrap}
+.hdr-info h1{font-size:21px;font-weight:700}
+.hdr-info .sub{color:var(--mut);font-size:11.5px;margin-top:3px}
+.benches{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.btag{background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.25);color:var(--cyan);font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600}
+.hdr-px{margin-left:auto;text-align:right}
+.hdr-px .px{font-size:30px;font-weight:800;color:var(--gold)}
+.hdr-px .pxl{font-size:11px;color:var(--mut)}
+
+/* METRICS */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+@media(max-width:720px){.mgrid{grid-template-columns:repeat(2,1fr)}}
+.mcard{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:13px 15px}
+.mcard .lbl{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px}
+.mcard .val{font-size:20px;font-weight:700;color:var(--gold);margin-top:3px}
+.mcard .note{font-size:11px;color:var(--mut);margin-top:2px}
+
+/* CHART */
+.ccard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:18px}
+.chdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.chdr h2{font-size:12.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px}
+.chdr .csub{font-size:10.5px;color:var(--mut);margin-top:3px}
+.toggles{display:flex;gap:7px;flex-shrink:0}
+.tbtn{background:var(--bg);border:1px solid var(--border);color:var(--mut);padding:5px 13px;border-radius:20px;cursor:pointer;font-size:11.5px;font-weight:600;transition:all .18s}
+.tbtn:hover,.tbtn.on{background:rgba(173,149,81,.13);border-color:var(--gold);color:var(--gold)}
+.chartbox{position:relative;height:330px}
+
+/* TABLES */
+.tcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:18px;overflow-x:auto}
+.tcard h2{font-size:12.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:13px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+thead th{color:var(--mut);font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;padding:7px 9px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+thead th:first-child{text-align:left}
+tbody td{padding:6.5px 9px;text-align:right;border-bottom:1px solid rgba(42,42,42,.5)}
+tbody td:first-child{text-align:left;font-weight:600}
+tbody tr:hover{background:rgba(255,255,255,.025)}
+.est{color:var(--mut);font-style:italic;font-size:10.5px}
+.fwdrow td{color:var(--cyan);opacity:.82}
+.gn{color:var(--grn)}
+.rd{color:var(--red)}
+.yl{color:var(--ylw)}
+.mt{color:var(--mut)}
+
+/* VERDICT */
+.vrd{padding:3px 9px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap;display:inline-block}
+.v-out{background:rgba(34,197,94,.13);border:1px solid rgba(34,197,94,.3);color:var(--grn)}
+.v-mix{background:rgba(234,179,8,.13);border:1px solid rgba(234,179,8,.3);color:var(--ylw)}
+.v-und{background:rgba(249,115,22,.13);border:1px solid rgba(249,115,22,.3);color:var(--org)}
+.v-sev{background:rgba(239,68,68,.13);border:1px solid rgba(239,68,68,.3);color:var(--red)}
+
+/* TABS */
+.tabwrap{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:18px}
+.tabnav{display:flex;overflow-x:auto;border-bottom:1px solid var(--border);background:rgba(0,0,0,.25);scrollbar-width:none}
+.tabnav::-webkit-scrollbar{display:none}
+.tnb{padding:11px 16px;font-size:11.5px;font-weight:600;color:var(--mut);background:none;border:none;cursor:pointer;white-space:nowrap;transition:all .18s;border-bottom:2px solid transparent}
+.tnb:hover{color:var(--txt)}
+.tnb.on{color:var(--gold);border-bottom-color:var(--gold);background:rgba(173,149,81,.07)}
+.tcont{display:none;padding:26px 30px}
+.tcont.on{display:block}
+.tcont h3{font-size:14.5px;font-weight:700;color:var(--gold);margin:22px 0 9px}
+.tcont h3:first-child{margin-top:0}
+.tcont p{color:#c5c5c5;line-height:1.78;margin-bottom:11px;font-size:13.5px}
+.tcont ul{margin:8px 0 13px 20px}
+.tcont li{color:#c5c5c5;font-size:13.5px;margin-bottom:6px;line-height:1.7}
+.hbox{background:rgba(173,149,81,.07);border-left:3px solid var(--gold);padding:13px 17px;border-radius:4px;margin:14px 0}
+.hbox p{margin:0;color:var(--txt);font-size:13px;line-height:1.72}
+.cbox{background:rgba(34,211,238,.07);border-left:3px solid var(--cyan);padding:13px 17px;border-radius:4px;margin:14px 0}
+.cbox p{margin:0;color:var(--txt);font-size:13px;line-height:1.72}
+
+/* FOOTER */
+.foot{border-top:1px solid var(--border);padding-top:18px;margin-top:6px;font-size:11px;color:var(--mut);line-height:1.75}
+.foot strong{color:var(--gold)}
+
+/* UTIL */
+.fnote{font-size:11px;color:var(--mut);margin-top:9px;line-height:1.6}
 </style>
 </head>
 <body>
-<div class="header">
-  <div class="header-row">
-    <div class="ticker-badge">CPAY</div>
-    <div>
-      <h1>Corpay (CPAY) — 10-Year Performance Report</h1>
-      <div class="sub">Formerly FleetCor Technologies (FLT) • NYSE: CPAY • S&P 500 Member</div>
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="badge">SYK</div>
+  <div class="hdr-info">
+    <h1>Stryker Corporation</h1>
+    <div class="sub">NYSE: SYK &nbsp;·&nbsp; S&P 500 Component &nbsp;·&nbsp; Medical Technology — Orthopaedics, MedSurg & Neurotechnology &nbsp;·&nbsp; HQ: Kalamazoo, Michigan</div>
+    <div class="benches">
+      <span class="btag">vs S&P 500</span>
+      <span class="btag">vs ISRG (Intuitive Surgical)</span>
+      <span class="btag">vs MDT (Medtronic)</span>
+      <span class="btag">vs XLV (Healthcare Sector ETF)</span>
     </div>
   </div>
-  <div class="meta">Prepared March 10, 2026 • Benchmarks: S&P 500, Visa (V), XLF • Prices approximate year-end closes; 2026E = guidance/YTD</div>
+  <div class="hdr-px">
+    <div class="px">$387</div>
+    <div class="pxl">~Current Price (Mar 2026)</div>
+    <div class="pxl" style="margin-top:3px">Market Cap ~$148B &nbsp;|&nbsp; EV ~$159B</div>
+  </div>
 </div>
 
-<div class="container">
-
-<!-- Chart Toggle -->
-<div class="chart-toggles">
-  <button class="active" onclick="showChart('fundamental')">Revenue/Share + EV/EBITDA</button>
-  <button onclick="showChart('indexed')">Indexed Price (Base = 100)</button>
+<!-- METRICS STRIP -->
+<div class="mgrid">
+  <div class="mcard"><div class="lbl">Current Price</div><div class="val">$387</div><div class="note">–9% from $406 ATH (Jan '25)</div></div>
+  <div class="mcard"><div class="lbl">Forward P/E</div><div class="val">25.9×</div><div class="note">Adj. EPS est. ~$14.95 (2026E)</div></div>
+  <div class="mcard"><div class="lbl">EV / EBITDA</div><div class="val">23.1×</div><div class="note">Below 10yr median ~25.8×</div></div>
+  <div class="mcard"><div class="lbl">Rev/Share Growth</div><div class="val">2.35×</div><div class="note">$27.96 (2015) → $65.59 (2025)</div></div>
+  <div class="mcard"><div class="lbl">Beta</div><div class="val">0.87</div><div class="note">Below-market price volatility</div></div>
+  <div class="mcard"><div class="lbl">Debt / Equity</div><div class="val">0.73×</div><div class="note">$16.4B LT Debt | $4.1B Cash</div></div>
+  <div class="mcard"><div class="lbl">FY2025 Revenue</div><div class="val">$25.1B</div><div class="note">+11.2% YoY; +135% vs. 2015</div></div>
+  <div class="mcard"><div class="lbl">EBITDA Margin</div><div class="val">25.9%</div><div class="note">+680 bps vs. 2015; 150 bps more guided by 2028</div></div>
 </div>
 
-<div class="chart-box">
-  <div id="chart-fund" style="position:relative;max-height:420px"><canvas id="fundChart"></canvas></div>
-  <div id="chart-idx" style="position:relative;max-height:420px;display:none"><canvas id="idxChart"></canvas></div>
-  <div class="chart-caption" id="chartCaption">Revenue/Share has tripled since 2016 while EV/EBITDA compressed from ~18x to ~12x — the market is paying less per dollar of growing earnings.</div>
+<!-- CHART -->
+<div class="ccard">
+  <div class="chdr">
+    <div>
+      <h2 id="ctitle">Revenue per Share & EV/EBITDA Multiple (2015–2025)</h2>
+      <div class="csub" id="csub">Bars: Rev/Share (cyan, left axis) &amp; EV/EBITDA (gold, right axis) · Dashed line: 10yr median multiple (~25.8×)</div>
+    </div>
+    <div class="toggles">
+      <button class="tbtn on" id="btn-f" onclick="swapChart('fund')">Fundamentals</button>
+      <button class="tbtn" id="btn-p" onclick="swapChart('perf')">Price Performance</button>
+    </div>
+  </div>
+  <div class="chartbox"><canvas id="mainChart"></canvas></div>
 </div>
 
-<!-- Fundamental Table -->
-<h2>Revenue Per Share & Valuation History</h2>
-<div class="tbl-wrap" id="fundTable"></div>
-<p class="tbl-note">Revenue/Share grew 217% (2016→2025) while price grew 106%. The gap = multiple compression. EBITDA from SEC filings; EV/EBITDA estimated from market cap + net debt. 2026E reflects company guidance.</p>
-<br>
-
-<!-- YoY Returns Table -->
-<h2>Year-over-Year Price Returns</h2>
-<div class="tbl-wrap" id="returnsTable"></div>
-
-<!-- Cumulative Returns -->
-<h2>Cumulative Total Return Summary</h2>
-<div class="tbl-wrap" id="cumTable"></div>
-
-<!-- Key Metrics -->
-<div class="metrics" id="metricsGrid"></div>
-
-<!-- Narrative -->
-<h2>Investment Analysis</h2>
-<div class="nav-tabs" id="navTabs"></div>
-<div class="section-box" id="sectionContent"></div>
-
-<!-- Footer -->
-<div class="footer">
-  <p><strong style="color:#666">Disclaimer:</strong> This report is for informational purposes only and does not constitute investment advice. Revenue, EBITDA, and share counts sourced from SEC filings, StockAnalysis, and MacroTrends. EV/EBITDA estimated from year-end market cap plus approximate net debt divided by reported EBITDA. GuruFocus reports 10-year range of 10.8x–24.2x with median 16.5x. 2026E reflects company guidance ($5.27B revenue midpoint, $26 adj. EPS). Past performance is not indicative of future results.</p>
-  <p style="margin-top:4px">Prepared for The Fedeli Group • Sources: SEC EDGAR, Yahoo Finance, StockAnalysis, GuruFocus, TradingView, Corpay Investor Relations</p>
+<!-- FUNDAMENTALS TABLE -->
+<div class="tcard">
+  <h2>Revenue per Share & Valuation — Annual Data (2015–2026E)</h2>
+  <table>
+    <thead>
+      <tr><th>Year</th><th>Revenue</th><th>Shares (M)</th><th>Rev/Share</th><th>YoY Δ</th><th>EBITDA</th><th>EBITDA Mgn</th><th>EV/EBITDA</th><th>Adj. EPS</th><th>Price (EOY)</th></tr>
+    </thead>
+    <tbody id="ftbl"></tbody>
+  </table>
+  <div class="fnote"><strong>E</strong> = Estimated. <strong style="color:var(--cyan)">2026E</strong> = Forward consensus estimates. Adj. EPS excludes intangible amortization &amp; restructuring. Note GAAP EPS (2025): $8.40 vs. Adj. ~$13.45 — the ~$5 spread reflects substantial M&amp;A amortization, a real economic cost investors should not ignore. 10yr median EV/EBITDA: <strong style="color:var(--gold)">~25.8×</strong> (GuruFocus). Range: 13.0× – 38.0×.</div>
 </div>
 
+<!-- RETURNS TABLE -->
+<div class="tcard">
+  <h2>Year-over-Year Total Returns vs. Benchmarks (2015–2024)</h2>
+  <table>
+    <thead>
+      <tr><th>Year</th><th>SYK</th><th>S&P 500</th><th>ISRG</th><th>XLV</th><th>MDT</th><th>SYK vs. SPX</th><th style="text-align:left">Context</th></tr>
+    </thead>
+    <tbody id="rtbl"></tbody>
+  </table>
+  <div class="fnote">Total return including dividends. (E) = estimated; SYK 2015–2016, ISRG 2015–2016, MDT 2015–2020 are estimated from price/return data. XLV annual returns: Yahoo Finance. ISRG/SYK confirmed 2017–2024: FinanceCharts.com.</div>
 </div>
+
+<!-- CUMULATIVE TABLE -->
+<div class="tcard">
+  <h2>Cumulative Total Return Summary</h2>
+  <table>
+    <thead>
+      <tr><th>Period</th><th>SYK</th><th>S&P 500</th><th>ISRG</th><th>XLV</th><th>MDT</th><th>SYK Verdict</th></tr>
+    </thead>
+    <tbody id="ctbl"></tbody>
+  </table>
+  <div class="fnote">TTM as of ~March 2026. 3Y/5Y periods through end of 2024. 10Y through end of 2024. Sources: FinanceCharts, Yahoo Finance, Stryker IR, StockAnalysis.com.</div>
+</div>
+
+<!-- TABS -->
+<div class="tabwrap">
+  <div class="tabnav">
+    <button class="tnb on" data-tab="t-gfw">💡 Good for What?!?</button>
+    <button class="tnb" data-tab="t-exec">Executive Summary</button>
+    <button class="tnb" data-tab="t-score">The Scoreboard</button>
+    <button class="tnb" data-tab="t-regime">Regime Analysis</button>
+    <button class="tnb" data-tab="t-risk">Risk / Return Profile</button>
+    <button class="tnb" data-tab="t-fund">Fundamentals vs. Sentiment</button>
+  </div>
+
+  <div class="tcont on" id="t-gfw">
+    <h3>The Core Setup: Reasonable Multiple, Exceptional Operator, Sector Headwind</h3>
+    <p>The clearest buy signal in SYK today is the collision of valuation and operational momentum. At ~23× EV/EBITDA — the lowest in four-plus years and roughly 11% below the 10-year median — Stryker is simultaneously running its fourth consecutive year of 10%+ organic growth, guiding to 8–9.5% for 2026, and expanding margins toward management's 150 bps target through 2028. In most market regimes, you pay a premium for this combination. Today the market is essentially handing it to you at a discount to historical fair value because healthcare has been structurally out of favor for five years.</p>
+    <div class="hbox"><p><strong style="color:var(--gold)">Buy signal conditions:</strong> Multiple at or below 22× EV/EBITDA (roughly $355–375), continuation of 8%+ organic growth, margin expansion ahead of guidance, or any healthcare sector rotation catalyst. Inari Medical ($4.9B, closed Feb 2025) adds a $6B+ peripheral vascular TAM with consumables-heavy revenue that fits the Stryker playbook precisely. Mako Spine and Mako Shoulder are both in limited launch as of 2025 — each is an option on incremental procedure penetration with zero penetration currently. These represent real, near-term growth levers the current valuation doesn't fully credit.</p></div>
+    <h3>The Pass Case: Sector Rotation Is a Multi-Year Headwind, Not a Blip</h3>
+    <p>Healthcare's underperformance versus the S&P 500 is not noise — it is a five-year structural pattern. XLV has lagged the S&P by roughly 100 percentage points since 2020. The causes (Medicare Advantage pricing pressure, drug pricing politics, institutional preference for AI/tech capital allocation) have not resolved. SYK's stock fell ~9% in the past year while the business grew 11% organically. That persistent valuation compression is a real signal: owning the best business in a disfavored sector still produces poor relative returns if capital doesn't rotate back in.</p>
+    <div class="cbox"><p><strong style="color:var(--cyan)">Aggressive entry point:</strong> $350–365 (roughly 20–21× forward EV/EBITDA). At that level you are pricing in the sector overhang and still paying a reasonable toll for one of the highest-quality compounders in large-cap healthcare. Above $400–415, you are paying full credit for continued execution with no valuation cushion — perfectly rational if you have a 5+ year time horizon and believe in the Mako platform thesis.</p></div>
+    <h3>What Could Change the Thesis</h3>
+    <ul>
+      <li><strong>Positive catalyst:</strong> Hospital capex cycle reaccelerating; Mako installed base crossing ~3,500 active systems; EU MDR clearances for Insignia hip and Pangea plating unlocking high-growth OUS markets; any Medicare Advantage rate normalization; broader healthcare sector re-rating</li>
+      <li><strong>Negative catalyst:</strong> Tariff escalation beyond the $400M+ already absorbed (2025 headwind); elective procedure volume slowdown as COVID backlog fully clears; Inari integration slower than expected; M&A digestion absorbing management bandwidth during a critical Mako expansion window</li>
+      <li><strong>Thesis killer:</strong> Mako penetration plateaus below 25% before Stryker can re-frame the narrative around next-generation robotics (Mako Spine, Mako Shoulder, future AI-guided navigation). At 15% penetration, the platform is still in expansion mode. If adoption slows, the re-rating is structural, not cyclical — and mirrors what happened to ISRG at 70%+ da Vinci penetration in U.S. soft tissue surgery when the growth narrative had to pivot to new procedures.</li>
+    </ul>
+    <h3>Portfolio Framing</h3>
+    <p>For a long-duration, quality-biased portfolio, SYK belongs in the core at or below 23× EV/EBITDA. It is a compounder — not a cyclical trade — and the aging demographics tailwind does not require macro cooperation to play out. For an investor who needs to outperform the S&P 500 over a 3-year horizon, SYK alone is unlikely to do it without sector rotation as a co-catalyst. The highest-conviction pairing is SYK as the value-oriented medtech operator and ISRG as the premium platform compounder — together they cover both ends of the medtech quality/valuation spectrum.</p>
+  </div>
+
+  <div class="tcont" id="t-exec">
+    <h3>Stryker: The Best Operator in Medtech — With Increasing Proof</h3>
+    <p>Stryker is not the most innovative company in medical technology — Intuitive Surgical holds that title with da Vinci — and it is not the highest-margin. What it is, unambiguously, is the best-run. Over the past decade it has compounded revenue at roughly 9% annually, expanded EBITDA margins by approximately 680 basis points, executed dozens of acquisitions without destroying shareholder returns, and built the Mako robotic platform into the leading solution in joint replacement robotics — all while keeping shares outstanding essentially flat and returning capital through growing dividends.</p>
+    <p>The two-segment structure tells the story concisely. MedSurg & Neurotechnology (~56% of 2025 revenue) covers surgical equipment, patient handling, EMS, clinical communications, neurovascular, and now with Inari Medical, peripheral vascular. This segment grew 11%+ organically in FY2025 and benefits from high consumables attach rates and the defensive economics of hospital infrastructure. Orthopaedics (~44%) is where the Mako story lives — hip, knee, and shoulder implants paired with the robotic platform that is driving both volume share gains and pricing power through value-based contracting with health systems.</p>
+    <div class="hbox"><p><strong style="color:var(--gold)">The Medtronic contrast:</strong> MDT is the cautionary tale every medtech investor should memorize. A company that defined category leadership in cardiac rhythm management and spine surgery entered the decade by paying $49.9B for Covidien in 2015, creating a complex cross-border tax structure, and subsequently lost its product innovation edge in nearly every core market. Over 10 years, MDT delivered +64% total return while SYK delivered +317%. The gap isn't luck — it reflects a decade of better capital allocation, better M&A discipline, and better talent retention. Stryker's bet on Mako while MDT bet on Mazor robotics and then abandoned it is a perfect encapsulation of the divergence.</p></div>
+    <p>The risk to the executive thesis is scale. At $25B in revenue, sustaining 10% organic growth requires adding $2.5B annually — equivalent to building an entirely new mid-sized medtech company every year. Stryker has done it four years consecutively, which is extraordinary. But the next decade depends increasingly on international market development (OUS remains structurally underpenetrated), new anatomy expansion for Mako (Spine and Shoulder are in early launch), and the integration and cross-selling of Inari into an already complex commercial organization.</p>
+  </div>
+
+  <div class="tcont" id="t-score">
+    <h3>10-Year Alpha: Real, Decisive — and Concentrated in the Right Years</h3>
+    <p>Over the full 10-year period, SYK has delivered approximately 317% total return versus ~240% for the S&P 500 — a 77-percentage-point lead built almost entirely during 2017, 2019, and 2023. Against Medtronic (+64%), the spread is 253 points, reflecting not just quality differences but the compounding effect of those differences sustained for a decade. The only name in the comparison set that outperforms over 10 years is ISRG at +723%, and that comes with a profoundly different valuation proposition — ISRG has historically traded at 55–75× EV/EBITDA compared to SYK's range of 13–38×. Owning ISRG's 10-year return required tolerating 2× the valuation risk.</p>
+    <p>The 5-year picture is where the bull narrative gets complicated. SYK is up roughly 56% versus the S&P 500's ~100% over 2020–2024. This is not a business failure: revenue nearly doubled, EBITDA grew from $3.1B to $6.5B, and margins expanded ~450 bps during this span. The entire relative shortfall is a valuation story. SYK peaked at ~34× EV/EBITDA during the COVID healthcare repricing in 2020, and the multiple compressed to ~23× today even as earnings doubled. Investors who owned SYK through this period collected all the earnings growth but gave back multiple expansion — the equity math is unforgiving when you start at 34× and end at 23×.</p>
+    <div class="hbox"><p><strong style="color:var(--gold)">The spread that matters most:</strong> SYK's 10-year edge over XLV (+180pp) is the most important number in the table. It confirms that Stryker generates genuine stock-specific alpha — this is not a "buy the sector" story. The sector itself has been a mediocre investment for a decade (XLV 10-year CAGR ~9% vs. SPX ~13%). Stryker extracted double the sector return through operational excellence and superior capital allocation.</p></div>
+    <p>The 3-year view (2022–2024) is the most encouraging for current holders: SYK +46% versus SPX +29%. Organic growth re-accelerated, margins expanded on schedule, and investors who bought the 2022 rate-shock dip captured both valuation recovery and earnings growth. The 1-year picture is the current frustration: SYK -9% versus SPX approximately +14%, with healthcare continuing to serve as the market's source-of-funds trade funding AI/tech positions.</p>
+  </div>
+
+  <div class="tcont" id="t-regime">
+    <h3>The Pattern: When SYK Earns Its Premium — and When It Gives It Back</h3>
+    <p>SYK earns outsized alpha in three conditions: (1) rising elective procedure volumes and expanding hospital capex cycles, (2) periods where durable secular growth commands a valuation premium, and (3) rate-shock or risk-off environments where defensive cash flow economics are valued. It gives back alpha when pure growth stocks lead (2021), when its valuation is elevated before sentiment reverses (2020 → 2021), and during sustained healthcare sector derating driven by policy uncertainty.</p>
+    <p><strong>2017 (+31% vs. SPX +22%):</strong> The year the Mako platform thesis became investable. Procedure volumes were strong, tax reform boosted earnings expectations, and the narrative of robotic-assisted surgery platform economics (learned from ISRG's playbook) was credible and early. SYK outperformed the S&P by 9 points in what became the template for why owning the platform story from the beginning matters.</p>
+    <p><strong>2019 (+35% vs. SPX +31%):</strong> Record procedure volumes, robust hospital capital equipment spending, and the Wright Medical acquisition announcement signaling growth conviction. Organic growth accelerated to the high single digits. Essentially a near-perfect operating environment delivered a near-perfect return.</p>
+    <p><strong>2020 (+18% vs. SPX +18%): The most analytically interesting year in the dataset.</strong> SYK was roughly in-line with the S&P 500 despite losing nearly half its elective procedure revenue in Q2 2020 (hospitals cancelled all non-emergency procedures during the COVID lockdown). The offsetting factors were powerful: the EMS, patient handling, and hospital bed portfolio surged as healthcare systems mobilized; management responded with aggressive cost actions; and the market applied a COVID-era quality-flight premium that pushed SYK to 33–34× EV/EBITDA. This was the valuation peak that created the 2021–2023 multiple headwind.</p>
+    <p><strong>2021 (+10% vs. SPX +29%): The regime analysis flashpoint.</strong> Revenue grew 19% — genuinely exceptional, partly reflecting the COVID volume recovery — and SYK still trailed the S&P by 18.5 percentage points. Supply chain disruptions, Omicron variant staffing impacts, and above all, the 2020 multiple overhang collided simultaneously. The market repriced from 34× to 29× EV/EBITDA even as EBITDA grew. This is the central lesson of SYK as an investment: a great business at a stretched multiple is still a poor short-term investment. Timing entry at reasonable valuations matters enormously even in a compounder.</p>
+    <p><strong>2022 (-7.4% vs. SPX -18%): SYK's best relative year, paradoxically during a loss.</strong> Rate shock crushed growth multiples — the Nasdaq fell 33%, ISRG fell 26%, the broader healthcare sector was largely spared but not immune. SYK's defensive cash flows, pricing power with hospitals, and low beta provided shelter. Outperformance of +10.7pp against the S&P in a down market is exactly what you expect from high-quality medtech with real switching costs. The 2022 performance validates the risk/return contract: you don't need exceptional upside from SYK, you need it to protect capital when the market is wrong-footed.</p>
+    <p><strong>2023–2024: Recovery — but sector headwinds persist.</strong> Organic growth re-accelerated to 10%+, margins expanded 100 bps each year, and the stock recovered from the 2022 dip. But healthcare broadly remained in the dog house: XLV returned just +2.1% in 2023 and +2.5% in 2024. SYK's 21–24% annual returns in those years came despite sector drag, not because of sector tailwind. That is a testament to business-specific alpha, and it also tells you how much incremental performance may be available when the sector eventually re-rates.</p>
+  </div>
+
+  <div class="tcont" id="t-risk">
+    <h3>Beta Understates the Real Risk: Multiple Volatility Is the Story</h3>
+    <p>SYK's beta of 0.87 suggests it is roughly 13% less volatile than the market — a mild defensive tilt that reflects healthcare's non-cyclical demand characteristics. But beta measures price co-movement with the broad market, and the real risk in SYK is something beta doesn't capture: valuation multiple volatility. The EV/EBITDA range over the past decade has been approximately 13× to 38× — a nearly 3× spread on the same underlying business. A move from 34× (2020 peak) to 23× (current) while EBITDA doubled still produced below-market 5-year returns. The business risk is low; the equity valuation risk is not.</p>
+    <div class="hbox"><p><strong style="color:var(--gold)">Analogy:</strong> Think of SYK like a Class A medical office building in a premier market. The tenants — orthopedic surgeons, hospital purchasing departments, emergency medical services — are sticky, long-duration, and recession-resistant. The asset manager (Stryker management) is exceptional by any measure. But the cap rate the private market will accept for this asset oscillates based on interest rate levels, sector sentiment, and where institutional capital wants to flow that year. You can own the highest-quality building in the city and earn mediocre returns for years if you acquired it at peak cap rate compression. That is precisely what 2020 buyers experienced through 2023 — excellent underlying performance, frustrating equity returns.</p></div>
+    <h3>SYK vs. ISRG: Two Fundamentally Different Risk Contracts</h3>
+    <p>ISRG is a software company wearing a surgical robot costume. It derives the majority of its revenue from instruments and accessories consumed per da Vinci procedure — a genuine razor/blade model at scale, with the capital equipment (the robot itself) as the platform that locks in the recurring revenue stream. Its EBITDA margins exceed 35%, switching costs are among the highest in all of healthcare (surgeon retraining, credentialing, staff certification), and the competitive moat borders on monopoly in U.S. soft tissue surgery. You pay 60–70× EV/EBITDA for those economics. SYK at 23× offers meaningfully different economics: premium capital goods with service overlays, implant pricing power through hospital contracting, and a Mako platform that is building toward ISRG-like lock-in but is earlier in the adoption curve. The trade-off is explicit — more value, less certainty of platform dominance.</p>
+    <p>The unresolved question for SYK's re-rating is whether Mako achieves the same degree of installed-base stickiness that da Vinci did. Mako has over 2 million procedures performed globally through 2024 and is installed in 45+ countries. Competing platforms (Zimmer Biomet's Rosa, emerging entrants) create more pricing pressure than ISRG has faced in a decade. If Mako achieves 30%+ knee/hip replacement penetration with demonstrated superior outcomes data, the platform economics thesis becomes credible and SYK deserves a structural multiple re-rating. That is the bull case in its purest form, and it could play out over 2025–2030.</p>
+    <h3>Balance Sheet: Leveraged for the First Time in a Decade</h3>
+    <p>Inari Medical ($4.9B closed Feb 2025) levered the balance sheet in a way Stryker is unaccustomed to. Net debt of approximately $12.3B against EBITDA of $6.5B puts leverage at roughly 1.9× — not alarming, but not the fortress balance sheet SYK historically carried. Free cash flow of $4.3B (FY2025) means Stryker will de-lever to ~1.5× within two years if it chooses not to make another large acquisition. The practical implication: a second large deal in the near term is unlikely, limiting the M&A optionality that has historically been a distinct valuation driver. Management has been clear it expects to continue bolt-on activity, but a transformative deal above $3–4B is off the table for at least 18–24 months.</p>
+  </div>
+
+  <div class="tcont" id="t-fund">
+    <h3>Revenue per Share: The Scorecard That Doesn't Lie</h3>
+    <p>Revenue per share has grown from $27.96 (2015) to $65.59 (2025) — a 135% increase at roughly 8.9% annually. This is genuine value creation: organic volume growth, pricing power in both implants and capital equipment, and M&A that has added revenue without meaningful share dilution (shares outstanding have remained essentially unchanged at ~380–383M for the entire decade). Stryker does not prioritize buybacks — it deploys capital into acquisitions — but it has not used equity as currency either. The result is a revenue-per-share compound that fully reflects business growth.</p>
+    <p>EBITDA margin expansion is the underappreciated part of the SYK story: from approximately 19% in 2015 to 25.9% in 2025, a 680 basis point improvement over a decade. This reflects a deliberate mix shift toward higher-margin consumables and software/services, manufacturing efficiency initiatives, and SG&A leverage as the specialized sales force model generates more revenue per dollar spent. Management's guidance of at least 150 additional basis points by 2028 is credible based on the track record — and would put SYK's EBITDA margin at nearly 28%, approaching premium medtech territory.</p>
+    <h3>Multiple Expansion, Peak, and Compression: The Full Cycle</h3>
+    <p>EV/EBITDA started the decade at approximately 16.5× (2015), expanded steadily through Mako enthusiasm and interest rate decline to 20–27× (2017–2019), spiked to 33.5× at the COVID-era peak (2020), then compressed back to 23.1× today as rates normalized and healthcare derated. The 10-year median is approximately 25.8×. At current levels, SYK trades roughly 11% below its own historical median — which is the quantitative buy argument in a single number.</p>
+    <p>The expansion from 2015 to 2020 was driven by three simultaneous forces: Mako launch and platform thesis credibility, secular interest rate decline compressing discount rates, and COVID-era defensive healthcare repricing. The compression from 2021 to today reflects the reversal of all three: Mako is now proven but no longer novel, rates normalized sharply, and healthcare has borne the brunt of institutional capital rotation toward AI/tech. None of these reversals are permanent — they're regime shifts, and regimes shift back.</p>
+    <h3>What's Not Being Said in the Standard Bull Case</h3>
+    <p>The standard Stryker pitch recites organic growth, Mako penetration, and margin expansion as self-sustaining trends. The hidden assumptions worth stress-testing: first, the post-COVID elective procedure recovery from 2022–2024 was partly a catch-up of deferred volumes — a one-time tailwind that may have inflated measured organic growth rates by 150–200 basis points. Normalized procedure growth in joint replacement is closer to 4–6% annually, not 10%. Second, Stryker's adjusted EPS measure ($13.45 in FY2025) departs from GAAP EPS ($8.40) by roughly $5 — the gap is almost entirely intangible amortization from acquisitions. This is a genuine economic cost: when you pay $4.9B for Inari, the amortization of those acquired intangibles represents real capital that left the company. Investors who value SYK on adjusted multiples while cheering M&A as value-creating need to be consistent — you cannot have both.</p>
+    <div class="cbox"><p><strong style="color:var(--cyan)">Steel man, then stress-test:</strong> The strongest bull case is that SYK in 2025 is structurally analogous to ISRG in 2012–2015 — a proven platform in early-to-mid adoption with the market undervaluing the lock-in economics that emerge at 25–30% procedure penetration. If correct, and Mako eventually commands ISRG-like platform premiums, SYK's normalized multiple is 28–32× and the stock is worth $450–520 on current earnings power. The stress test: ISRG at 25% penetration in 2013 had 85%+ U.S. soft tissue market share with no credible competitor and 10+ years of installed-base inertia. Mako at similar penetration will face Rosa, emerging AI-guided navigation systems that don't require capital equipment purchase, and Zimmer Biomet with a meaningful installed base of its own. The moat is real but narrower than ISRG's was at the same stage — which justifies a moderate premium, not a parity multiple.</p></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="foot">
+  <strong>Disclaimer:</strong> This report is for informational and analytical purposes only and does not constitute investment advice. Data sourced from Stryker Corporation IR filings, Yahoo Finance, FinanceCharts.com, StockAnalysis.com, GuruFocus, Stryker Mako platform data, and SEC EDGAR filings. Historical returns reflect total return including dividends where available. Figures marked (E) are estimates based on available data and interpolation. Forward estimates are consensus-based and subject to revision. Past performance does not guarantee future results. GAAP EPS ($8.40, FY2025) and adjusted EPS (~$13.45) differ materially due to M&amp;A amortization — both figures are presented for completeness.
+  &nbsp;&nbsp;·&nbsp;&nbsp;<strong>Prepared by: The Fedeli Group — Analytical Research</strong> &nbsp;&nbsp;·&nbsp;&nbsp; <strong>Date: March 11, 2026</strong>
+</div>
+
+</div><!-- end wrap -->
 
 <script>
-const gold='#AD9551',cyan='#22d3ee',blue='#3b82f6',purple='#a855f7',red='#dc2626',green='#16a34a';
+// ==== DATA ====
+const YEARS = [2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,'2026E'];
+const REV   = [10.71,11.33,12.44,13.60,14.88,14.35,17.11,18.45,20.50,22.60,25.12,27.50];
+const SHS   = [383,382,381,381,380,379,378,376,376,382,383,383];
+const RPS   = [27.96,29.66,32.65,35.70,39.16,37.87,45.26,49.07,54.52,59.16,65.59,71.80];
+const EBITDA= [2.05,2.17,2.95,3.25,3.63,3.08,3.61,3.90,4.80,5.90,6.50,7.15];
+const MGN   = [19.1,19.1,23.7,23.9,24.4,21.5,21.1,21.1,23.4,26.1,25.9,26.0];
+const EV_EB = [16.5,17.8,20.3,21.8,27.1,33.5,28.9,21.8,25.5,26.1,23.1,21.5];
+const AEPS  = [5.15,5.67,6.49,7.31,8.26,7.43,9.06,9.07,10.63,12.19,13.45,14.95];
+const PRICE = [95,114,149,153,212,249,275,254,316,370,387,null];
+const MEDIAN_EV = 25.82;
 
-const fundData=[
-  {year:"2016",rev:1830,shares:91,rps:20.1,ebitda:960,evE:18.2,price:163,eps:7.92,em:52.5},
-  {year:"2017",rev:2250,shares:89,rps:25.3,ebitda:1140,evE:19.8,price:205,eps:9.40,em:50.7},
-  {year:"2018",rev:2430,shares:88,rps:27.6,ebitda:1280,evE:15.4,price:190,eps:10.67,em:52.7},
-  {year:"2019",rev:2650,shares:86,rps:30.8,ebitda:1430,evE:21.5,price:290,eps:12.42,em:54.0},
-  {year:"2020",rev:2390,shares:85,rps:28.1,ebitda:1190,evE:18.4,price:272,eps:10.77,em:49.8},
-  {year:"2021",rev:2830,shares:84,rps:33.7,ebitda:1430,evE:14.2,price:242,eps:13.21,em:50.5},
-  {year:"2022",rev:3430,shares:77,rps:44.5,ebitda:1780,evE:10.8,price:183,eps:16.10,em:51.9},
-  {year:"2023",rev:3760,shares:74,rps:50.8,ebitda:1994,evE:13.8,price:268,eps:16.92,em:53.0},
-  {year:"2024",rev:3970,shares:72,rps:55.1,ebitda:2129,evE:15.8,price:330,eps:19.01,em:53.6},
-  {year:"2025",rev:4530,shares:71,rps:63.8,ebitda:2430,evE:14.2,price:335,eps:21.38,em:53.6},
-  {year:"2026E",rev:5270,shares:70,rps:75.3,ebitda:2860,evE:11.9,price:315,eps:26.00,em:54.3}
+const ANN = [
+  {yr:2015,syk:21.0,spx:1.4,isrg:5.0,xlv:6.8,mdt:1.0,eS:true,eI:true,eM:true, ctx:'Procedure recovery; sector outperforms broadly'},
+  {yr:2016,syk:-3.0,spx:12.0,isrg:3.0,xlv:-2.8,mdt:16.0,eS:true,eI:true,eM:true, ctx:'Healthcare political headwinds; Clinton drug pricing'},
+  {yr:2017,syk:30.9,spx:21.8,isrg:68.0,xlv:21.8,mdt:8.0,eS:false,eI:false,eM:true, ctx:'Tax reform; Mako launch; ortho volume surge'},
+  {yr:2018,syk:2.4,spx:-4.4,isrg:-5.0,xlv:6.3,mdt:14.0,eS:false,eI:false,eM:true, ctx:'Rate hike fears; SYK defensive vs. market decline'},
+  {yr:2019,syk:35.3,spx:31.5,isrg:37.0,xlv:20.4,mdt:22.0,eS:false,eI:false,eM:true, ctx:'Record procedure volumes; Wright Medical bid'},
+  {yr:2020,syk:18.2,spx:18.4,isrg:41.0,xlv:13.3,mdt:-3.0,eS:false,eI:false,eM:false, ctx:'COVID: elective halt Q2, EMS/beds surge H2; peak multiple'},
+  {yr:2021,syk:10.2,spx:28.7,isrg:31.8,xlv:26.0,mdt:-9.8,eS:false,eI:false,eM:false, ctx:'Supply chain; COVID delta; growth stocks dominate'},
+  {yr:2022,syk:-7.4,spx:-18.1,isrg:-26.2,xlv:-2.1,mdt:-22.6,eS:false,eI:false,eM:false, ctx:'Rate shock; SYK defensive +10.7pp vs. S&P'},
+  {yr:2023,syk:23.8,spx:26.3,isrg:27.1,xlv:2.1,mdt:9.6,eS:false,eI:false,eM:false, ctx:'Hospital capex recovery; Mako momentum resumes'},
+  {yr:2024,syk:21.3,spx:25.0,isrg:54.7,xlv:2.5,mdt:0.3,eS:false,eI:false,eM:false, ctx:'ISRG robotics premium; healthcare broadly lagged SPX'},
 ];
 
-const priceBase={cpay:163,spx:2239,v:78.02,xlf:23.55};
-const priceData=[
-  {y:"2016",c:163,s:2239,v:78.02,x:23.55},{y:"2017",c:205,s:2674,v:114.02,x:27.86},
-  {y:"2018",c:190,s:2507,v:131.94,x:23.57},{y:"2019",c:290,s:3231,v:187.90,x:30.14},
-  {y:"2020",c:272,s:3756,v:218.73,x:28.20},{y:"2021",c:242,s:4766,v:216.71,x:38.27},
-  {y:"2022",c:183,s:3840,v:207.89,x:33.28},{y:"2023",c:268,s:4770,v:260.35,x:37.70},
-  {y:"2024",c:330,s:5881,v:317.71,x:49.30},{y:"2025",c:335,s:5906,v:351.00,x:53.68},
-  {y:"2026*",c:315,s:5850,v:320,x:50.57}
+const CUM = [
+  {p:'1Y (TTM ~Mar 2026)',syk:-8.7,spx:14,isrg:6,xlv:-8,mdt:25,vrd:'v-und',vl:'UNDERPERFORM vs. SPX'},
+  {p:'3Y (2022–2024)',syk:46,spx:29,isrg:70,xlv:2,mdt:40,vrd:'v-out',vl:'OUTPERFORM vs. SPX'},
+  {p:'5Y (2020–2024)',syk:56,spx:100,isrg:136,xlv:29,mdt:1,vrd:'v-und',vl:'UNDERPERFORM vs. SPX'},
+  {p:'10Y (2015–2024)',syk:317,spx:240,isrg:723,xlv:137,mdt:64,vrd:'v-out',vl:'OUTPERFORM vs. SPX'},
 ];
 
-const yoyReturns=[
-  {y:"2016",c:7.2,s:9.5,v:0.6,x:2.6,ctx:"Steady growth"},
-  {y:"2017",c:25.8,s:19.4,v:46.1,x:18.3,ctx:"Tax reform optimism"},
-  {y:"2018",c:-7.3,s:-6.2,v:15.7,x:-15.4,ctx:"Rate hikes / Vol spike"},
-  {y:"2019",c:52.6,s:28.9,v:42.4,x:27.9,ctx:"Bull run / Fed pivot"},
-  {y:"2020",c:-6.2,s:16.3,v:16.4,x:-6.4,ctx:"COVID crash & recovery"},
-  {y:"2021",c:-11.0,s:26.9,v:-0.9,x:35.7,ctx:"Reopening / inflation"},
-  {y:"2022",c:-24.4,s:-19.4,v:-3.4,x:-13.0,ctx:"FTC probe / rate shock"},
-  {y:"2023",c:46.4,s:24.2,v:25.2,x:13.3,ctx:"FTC settle / recovery"},
-  {y:"2024",c:23.1,s:23.3,v:22.0,x:30.8,ctx:"Rebrand / Corp Payments"},
-  {y:"2025",c:1.5,s:0.4,v:10.5,x:8.9,ctx:"ATH → pullback"},
-  {y:"2026*",c:-6.0,s:-0.9,v:-8.9,x:-5.8,ctx:"YTD through Mar 10"}
-];
+// Indexed chart data (base 100 = Jan 1, 2015)
+const IX_YRS = [2015,2016,2017,2018,2019,2020,2021,2022,2023,2024];
+const IX_SYK = [121.0,117.4,153.6,157.3,212.9,251.6,277.3,256.7,317.8,385.7];
+const IX_SPX = [101.4,113.5,138.3,132.2,173.8,205.9,265.1,216.9,274.3,342.9];
+const IX_ISR = [105.0,108.2,181.7,172.6,236.5,333.5,439.7,324.9,413.2,639.4];
+const IX_XLV = [106.8,103.8,126.4,134.4,161.8,183.5,231.2,226.5,231.1,236.9];
+const IX_MDT = [101.0,117.2,126.6,144.3,175.6,170.3,153.6,118.9,130.3,130.7];
 
-const cumReturns=[
-  {p:"1-Year",c:"-6% to -12%",s:"+8% to +18%",v:"-4% to -11%",x:"+2% to +5%",vd:"Underperform",vc:"badge-orange"},
-  {p:"3-Year",c:"~64%",s:"~79%",v:"~51%",x:"~50%",vd:"Mixed",vc:"badge-yellow"},
-  {p:"5-Year",c:"~10%",s:"~83%",v:"~64%",x:"~79%",vd:"Severe lag",vc:"badge-red"},
-  {p:"10-Year",c:"~107%",s:"~186%",v:"~313%",x:"~120%",vd:"Underperform",vc:"badge-orange"}
-];
+// ==== CHART ====
+let chart = null;
+let mode = 'fund';
 
-const metrics=[
-  {l:"Current Price",v:"~$315",s:"Mar 10, 2026"},{l:"Fwd P/E",v:"~12x",s:"$26 adj. EPS guide"},
-  {l:"EV/EBITDA (TTM)",v:"12.5x",s:"10Y median: 16.5x"},{l:"Rev/Share Growth",v:"3.2x",s:"$20 → $64 (2016–25)"},
-  {l:"Beta",v:"1.25",s:"Higher vol, lower return"},{l:"Debt/Equity",v:"201%",s:"Leverage: 2.8x"},
-  {l:"FY25 Revenue",v:"$4.53B",s:"+14% YoY"},{l:"EBITDA Margin",v:"~54%",s:"Stable & expanding"}
-];
+const CHART_DEFAULTS = {
+  plugins:{legend:{labels:{color:'#666',font:{size:11},boxWidth:14}},
+    tooltip:{backgroundColor:'#1a1a1a',borderColor:'#333',borderWidth:1,titleColor:'#AD9551',bodyColor:'#ccc',padding:10}
+  }
+};
 
-const sections=[
-  {id:"overview",t:"Executive Summary",c:`CPAY has delivered strong operational execution — 13.6% annualized revenue growth, 31% ROE, 14% EPS compounding — while generating one of the worst risk-adjusted stock returns among quality payments names over any meaningful time horizon. The stock carries a 1.25 beta but hasn't earned the volatility premium. Over five years, CPAY returned roughly 10% total versus the S&P 500's 83%, Visa's 64%, and XLF's 79%. That's a broken risk/return contract.`},
-  {id:"score",t:"1. The Scoreboard",c:`On a 1-year basis, CPAY has declined roughly 6–12% while the S&P 500 returned approximately 8–18% depending on the exact window. On a relative basis, CPAY has underperformed the S&P 500 by roughly 23 percentage points over the trailing year. Visa has also been weak at -4% to -11% TTM, but XLF held up better at roughly +2% to +5%.\n\nOn a 3-year cumulative basis, CPAY returned about 64% versus the S&P 500's 79%. That's a ~15-point gap but looks respectable only because of a favorable starting point — March 2023 was near the post-2022 trough. Visa's 3-year return was ~51%, XLF about 50%. CPAY actually beat its direct comps on a 3-year basis, even while lagging the broad market.\n\nOn a 5-year cumulative basis, the picture gets ugly. CPAY returned roughly 10% over five years vs. the S&P 500's 83%. That's a 73-point gap. Visa returned about 64%, and XLF returned about 79%. CPAY didn't just lag the market — it lagged everything by an embarrassing margin over a full cycle.`},
-  {id:"regime",t:"2. Regime Analysis",c:`In 2022, CPAY got destroyed — the stock fell roughly 30–35%. Three forces hit simultaneously: the Fed's aggressive rate hike cycle crushed payments multiples broadly; a high-profile FTC investigation created an idiosyncratic overhang; and FX headwinds from a strong dollar hit the company's significant international revenue (~40%). Think of this as a triple-whammy where macro, regulatory, and currency risk all correlated at once — the worst-case for a 1.25-beta stock.\n\nIn 2023–2024, CPAY staged an impressive recovery — roughly doubling from its 2022 trough to an all-time high near $400 by February 2025. The FTC investigation settled, the rebrand to Corpay signaled a narrative reset, and the company delivered 12% organic revenue growth and 21% adjusted EPS growth in FY2024.\n\nSince February 2025, the stock has given back a substantial chunk, falling from ~$400 to the ~$290–315 range. It currently trades about 14% below its 200-day moving average. The pattern is clear: CPAY outperforms in risk-on recoveries and underperforms in tightening/uncertainty regimes. It acts more like a specialty finance company than a network monopolist like Visa.`},
-  {id:"risk",t:"3. Risk/Return Profile",c:`Think of it this way: Visa is a toll booth on the global payments highway — it clips a fee on every transaction without credit risk. CPAY is more like a fleet of specialized trucks on that highway — managing fuel costs, route optimization, FX, credit risk on receivables, and regulatory scrutiny, all while collecting tolls that are structurally smaller and more complex to earn.\n\nCPAY carries a beta of 1.25, promising higher returns for bearing more volatility. The problem: realized 5-year return of ~10% cumulative (about 2% annualized) is well below Treasuries during this period. That's a broken risk/return contract.\n\nThe leverage amplifies this. Total debt-to-equity sits at ~201%, with a 2.8x leverage ratio. When macro tightens, CPAY's leverage magnifies downside in a way Visa never experiences. The 3-year beat against V and XLF is real but is a base-effect artifact — measured from a trough. From any pre-crash starting point, CPAY loses to both comps.`},
-  {id:"fund",t:"4. Fundamentals vs. Sentiment",c:`The fundamentals are genuinely strong. Full-year 2025 revenue hit $4.53B (up 14%, 10% organic), adjusted EPS grew 12% to $21.38. The Mastercard minority investment — $300M into the cross-border unit at a $13B valuation — is a strong institutional stamp. 2026 guidance calls for 16% revenue growth, adjusted EPS of $26 (beating estimates by 5.2%).\n\nYet the stock is flat-to-down. Three explanations:\n\nMultiple compression is the dominant force. The market has re-rated CPAY from ~25–28x forward earnings at peak to ~12–14x forward now. Ron Clarke's acquisition-heavy, adjusted-earnings-driven model triggers the "what's real here?" discount applied to rollup-style compounders.\n\nThe narrative is shifting from "payments" to "payments infrastructure vs. payments complexity." Visa and Mastercard own networks. CPAY operates on top with more moving parts, regulatory exposure, and execution risk. The market pays for simplicity.\n\nWhat's NOT being said: the aggressive acquisition strategy (Alpha Group, AvidXchange, GPS Capital Markets) is funded at exactly the wrong time — buying growth at 2.8x leverage when rates are elevated means paying more for capital while getting compressed multiples on acquisitions. Management's $75M cost savings target is the tell — they're buying revenue and cutting costs to make the math work.`},
-  {id:"so",t:"So What?",c:`The bull case: Consensus target of ~$379 implies ~17% upside. At $26 EPS in 2026, you're buying at ~12x forward earnings for 10–16% organic grower. Meaningful disconnect if growth persists.\n\nThe bear case: GAAP net income growth (6.58% in 2025) lags adjusted EPS meaningfully due to stock comp, amortization of acquired intangibles, and integration costs. 201% debt-to-equity means any stumble gets amplified. The stock price is roughly where it traded five years ago — the market has persistently refused to pay up.\n\nThe uncomfortable question: If CPAY had delivered identical financial performance under the ticker "V" or "MA" with the same balance sheet cleanliness, it would trade at 25–30x. The discount is structural, not cyclical — it won't change unless the company dramatically simplifies reporting, reduces leverage, or Clarke hands the reins to a successor who resets the narrative. The Mastercard cross-border investment may signal an eventual segment-level monetization event, but that's a 2–3 year option, not a 2026 catalyst.\n\nBottom line: Run the DuPont decomposition. CPAY's 31% ROE looks great, but back out the 2x leverage and you're looking at a more modest return on total capital. The ROIC filter is the right framework before committing here.`}
-];
-
-// --- RENDER CHARTS ---
-let fundChart, idxChart;
-
-function renderFundChart(){
-  const ctx=document.getElementById('fundChart').getContext('2d');
-  fundChart=new Chart(ctx,{
+function fundCfg(){
+  const n = 11;
+  return {
     type:'bar',
     data:{
-      labels:fundData.map(d=>d.year),
+      labels:YEARS.slice(0,n),
       datasets:[
-        {label:'Revenue / Share',data:fundData.map(d=>d.rps),backgroundColor:fundData.map(d=>d.year==='2026E'?'rgba(34,211,238,0.35)':'rgba(34,211,238,0.7)'),borderRadius:4,yAxisID:'y',order:2},
-        {label:'EV / EBITDA',data:fundData.map(d=>d.evE),type:'line',borderColor:gold,backgroundColor:gold,pointBackgroundColor:gold,pointBorderColor:'#1a1a1a',pointBorderWidth:2,pointRadius:5,borderWidth:3,yAxisID:'y1',tension:0.3,order:1}
+        {label:'Revenue per Share ($)',data:RPS.slice(0,n),backgroundColor:'rgba(34,211,238,.65)',borderColor:'rgba(34,211,238,.9)',borderWidth:1,yAxisID:'y',order:2},
+        {label:'EV/EBITDA Multiple (×)',data:EV_EB.slice(0,n),backgroundColor:'rgba(173,149,81,.6)',borderColor:'rgba(173,149,81,.9)',borderWidth:1,yAxisID:'y1',order:3},
+        {label:`10yr Median (${MEDIAN_EV}×)`,data:Array(n).fill(MEDIAN_EV),type:'line',borderColor:'rgba(255,255,255,.3)',borderWidth:1.5,borderDash:[6,4],pointRadius:0,yAxisID:'y1',order:1}
       ]
     },
     options:{
+      ...CHART_DEFAULTS,
       responsive:true,maintainAspectRatio:false,
-      interaction:{mode:'index',intersect:false},
-      plugins:{
-        legend:{labels:{color:'#ccc',font:{size:12}}},
-        tooltip:{
-          backgroundColor:'#1a1a1a',borderColor:gold,borderWidth:1,titleColor:gold,bodyColor:'#ccc',
+      plugins:{...CHART_DEFAULTS.plugins,
+        tooltip:{...CHART_DEFAULTS.plugins.tooltip,
           callbacks:{
-            afterBody:function(ctx){
-              const i=ctx[0].dataIndex;const d=fundData[i];
-              return[`Revenue: $${(d.rev/1000).toFixed(2)}B`,`EBITDA: $${(d.ebitda/1000).toFixed(2)}B`,`Margin: ${d.em}%`,`Adj EPS: $${d.eps}`,`Price: $${d.price}`,`Shares: ${d.shares}M`];
+            label:c=>{
+              if(c.dataset.label.includes('Revenue')) return ` Rev/Share: $${c.parsed.y.toFixed(2)}`;
+              if(c.dataset.label.includes('Median')) return ` Median EV/EBITDA: ${c.parsed.y}×`;
+              return ` EV/EBITDA: ${c.parsed.y.toFixed(1)}×`;
+            },
+            afterBody:items=>{
+              const i=items[0].dataIndex;
+              return [`Revenue: $${REV[i].toFixed(2)}B`,`EBITDA: $${EBITDA[i].toFixed(2)}B`,`EBITDA Margin: ${MGN[i].toFixed(1)}%`,`Adj. EPS: $${AEPS[i].toFixed(2)}`,PRICE[i]?`EOY Price: ~$${PRICE[i]}`:''];
             }
           }
-        },
-        annotation:{annotations:{medianLine:{type:'line',yMin:16.54,yMax:16.54,yScaleID:'y1',borderColor:'#555',borderDash:[6,4],borderWidth:1,label:{display:true,content:'10Y Median: 16.5x',position:'end',color:'#666',font:{size:10}}}}}
+        }
       },
       scales:{
-        x:{ticks:{color:'#6b7280',font:{size:12}},grid:{color:'#222'}},
-        y:{position:'left',ticks:{color:cyan,font:{size:11},callback:v=>'$'+v},grid:{color:'#222'},title:{display:true,text:'Rev / Share',color:cyan,font:{size:11}}},
-        y1:{position:'right',min:8,max:24,ticks:{color:gold,font:{size:11},callback:v=>v+'x'},grid:{drawOnChartArea:false},title:{display:true,text:'EV / EBITDA',color:gold,font:{size:11}}}
+        x:{ticks:{color:'#666',font:{size:11}},grid:{color:'rgba(42,42,42,.5)'}},
+        y:{position:'left',title:{display:true,text:'Revenue per Share ($)',color:'#22d3ee',font:{size:11}},ticks:{color:'#22d3ee',font:{size:11},callback:v=>`$${v}`},grid:{color:'rgba(42,42,42,.4)'}},
+        y1:{position:'right',title:{display:true,text:'EV/EBITDA (×)',color:'#AD9551',font:{size:11}},ticks:{color:'#AD9551',font:{size:11},callback:v=>`${v}×`},grid:{drawOnChartArea:false},min:0,max:42}
       }
     }
-  });
+  };
 }
 
-function renderIdxChart(){
-  const ctx=document.getElementById('idxChart').getContext('2d');
-  const idx=priceData.map(d=>({y:d.y,c:Math.round(d.c/priceBase.cpay*100),s:Math.round(d.s/priceBase.spx*100),v:Math.round(d.v/priceBase.v*100),x:Math.round(d.x/priceBase.xlf*100)}));
-  idxChart=new Chart(ctx,{
+function perfCfg(){
+  return {
     type:'line',
     data:{
-      labels:idx.map(d=>d.y),
+      labels:IX_YRS,
       datasets:[
-        {label:'CPAY',data:idx.map(d=>d.c),borderColor:gold,backgroundColor:gold,pointBackgroundColor:gold,borderWidth:3,pointRadius:4,tension:0.3},
-        {label:'S&P 500',data:idx.map(d=>d.s),borderColor:blue,pointBackgroundColor:blue,borderWidth:2,pointRadius:3,tension:0.3},
-        {label:'Visa (V)',data:idx.map(d=>d.v),borderColor:purple,pointBackgroundColor:purple,borderWidth:2,pointRadius:3,tension:0.3},
-        {label:'XLF',data:idx.map(d=>d.x),borderColor:cyan,pointBackgroundColor:cyan,borderWidth:2,pointRadius:3,tension:0.3}
+        {label:'SYK',data:IX_SYK,borderColor:'#AD9551',backgroundColor:'rgba(173,149,81,.04)',borderWidth:2.5,pointRadius:3,tension:.3,fill:false},
+        {label:'S&P 500',data:IX_SPX,borderColor:'#d4d4d4',backgroundColor:'transparent',borderWidth:2,pointRadius:3,tension:.3,fill:false},
+        {label:'ISRG',data:IX_ISR,borderColor:'#22d3ee',backgroundColor:'transparent',borderWidth:2,pointRadius:3,tension:.3,fill:false},
+        {label:'XLV',data:IX_XLV,borderColor:'#7c6f2e',backgroundColor:'transparent',borderWidth:1.5,borderDash:[4,3],pointRadius:2,tension:.3,fill:false},
+        {label:'MDT',data:IX_MDT,borderColor:'#4a4a4a',backgroundColor:'transparent',borderWidth:1.5,borderDash:[3,3],pointRadius:2,tension:.3,fill:false}
       ]
     },
     options:{
+      ...CHART_DEFAULTS,
       responsive:true,maintainAspectRatio:false,
-      interaction:{mode:'index',intersect:false},
-      plugins:{legend:{labels:{color:'#ccc',font:{size:12}}},tooltip:{backgroundColor:'#1a1a1a',borderColor:gold,borderWidth:1,titleColor:gold,bodyColor:'#ccc'}},
+      plugins:{...CHART_DEFAULTS.plugins,
+        tooltip:{...CHART_DEFAULTS.plugins.tooltip,
+          callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toFixed(1)} (+${(c.parsed.y-100).toFixed(1)}%)`}
+        }
+      },
       scales:{
-        x:{ticks:{color:'#6b7280',font:{size:12}},grid:{color:'#222'}},
-        y:{ticks:{color:'#999',font:{size:11}},grid:{color:'#222'},min:50,max:420}
+        x:{ticks:{color:'#666',font:{size:11}},grid:{color:'rgba(42,42,42,.5)'}},
+        y:{ticks:{color:'#888',font:{size:11}},grid:{color:'rgba(42,42,42,.4)'},title:{display:true,text:'Indexed (Base 100 = Jan 2015)',color:'#666',font:{size:11}}}
       }
     }
+  };
+}
+
+function initChart(){
+  const ctx=document.getElementById('mainChart').getContext('2d');
+  chart=new Chart(ctx,fundCfg());
+}
+
+function swapChart(m){
+  mode=m;
+  document.getElementById('btn-f').classList.toggle('on',m==='fund');
+  document.getElementById('btn-p').classList.toggle('on',m==='perf');
+  const t=document.getElementById('ctitle'),s=document.getElementById('csub');
+  if(m==='fund'){t.textContent='Revenue per Share & EV/EBITDA Multiple (2015–2025)';s.textContent='Bars: Rev/Share (cyan, left axis) & EV/EBITDA (gold, right axis) · Dashed: 10yr median (~25.8×)';}
+  else{t.textContent='Indexed Price Performance (Base 100 = Jan 2015)';s.textContent='Total return indexed. Estimates used for MDT 2015–2020 and ISRG 2015–2016.';}
+  chart.destroy();
+  const ctx2=document.getElementById('mainChart').getContext('2d');
+  chart=new Chart(ctx2,m==='fund'?fundCfg():perfCfg());
+}
+
+// ==== FUND TABLE ====
+function buildFundTable(){
+  const tb=document.getElementById('ftbl');
+  YEARS.forEach((yr,i)=>{
+    const isFwd=yr==='2026E';
+    const isEst=i<2;
+    const yoy=i>0?((RPS[i]-RPS[i-1])/RPS[i-1]*100).toFixed(1):null;
+    const yoyC=yoy?(+yoy>=0?'gn':'rd'):'';
+    const evC=EV_EB[i]<20?'gn':EV_EB[i]>28?'rd':'yl';
+    const tr=document.createElement('tr');
+    if(isFwd)tr.className='fwdrow';
+    tr.innerHTML=`
+      <td>${yr}${isEst?' <span class="est">(E)</span>':''}</td>
+      <td>$${REV[i].toFixed(2)}B${isEst?' <span class="est">E</span>':''}</td>
+      <td>${SHS[i]}M</td>
+      <td>$${RPS[i].toFixed(2)}${isEst?' <span class="est">E</span>':''}</td>
+      <td class="${yoyC}">${yoy?(+yoy>=0?'+':'')+yoy+'%':'—'}</td>
+      <td>$${EBITDA[i].toFixed(2)}B</td>
+      <td>${MGN[i].toFixed(1)}%</td>
+      <td class="${isFwd?'':evC}">${EV_EB[i].toFixed(1)}×</td>
+      <td>$${AEPS[i].toFixed(2)}</td>
+      <td>${PRICE[i]?'$'+PRICE[i]:isFwd?'<span class="mt">—</span>':'$387*'}</td>`;
+    tb.appendChild(tr);
   });
 }
 
-function showChart(t){
-  document.querySelectorAll('.chart-toggles button').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
-  const f=document.getElementById('chart-fund'),i=document.getElementById('chart-idx'),cap=document.getElementById('chartCaption');
-  if(t==='fundamental'){f.style.display='block';i.style.display='none';cap.textContent="Revenue/Share has tripled since 2016 while EV/EBITDA compressed from ~18x to ~12x — the market is paying less per dollar of growing earnings.";}
-  else{f.style.display='none';i.style.display='block';cap.textContent="Indexed to 100 at year-end 2016. CPAY (gold) returned ~93% vs. S&P 500's 161%, Visa's 310%, and XLF's 115%.";}
-}
-
-// --- RENDER TABLES ---
-function rv(v){return v>0?`<span class="pos">+${v}%</span>`:v<0?`<span class="neg">${v}%</span>`:`<span>${v}%</span>`}
-function sp(a,b){const d=(a-b).toFixed(1);return d>0?`<span class="pos">+${d}pp</span>`:`<span class="neg">${d}pp</span>`}
-
-function renderFundTable(){
-  let h='<table><thead><tr>';
-  ['Year','Revenue','Shares (M)','Rev/Share','YoY Δ','EBITDA','Margin','EV/EBITDA','Adj. EPS','Price'].forEach(c=>h+=`<th>${c}</th>`);
-  h+='</tr></thead><tbody>';
-  fundData.forEach((d,i)=>{
-    const prev=i>0?fundData[i-1]:null;
-    const g=prev?((d.rps/prev.rps-1)*100).toFixed(1):null;
-    const gc=g===null?'':parseFloat(g)>0?'pos':'neg';
-    const op=d.year==='2026E'?'opacity:.7':'';
-    h+=`<tr style="${op}"><td class="yr">${d.year}</td><td>$${(d.rev/1000).toFixed(2)}B</td><td style="color:#999">${d.shares}</td><td class="cyn">$${d.rps.toFixed(2)}</td><td class="${gc}">${g===null?'—':(parseFloat(g)>0?'+':'')+g+'%'}</td><td>$${(d.ebitda/1000).toFixed(2)}B</td><td style="color:#999">${d.em.toFixed(1)}%</td><td class="gold">${d.evE.toFixed(1)}x</td><td>$${d.eps.toFixed(2)}</td><td style="color:#999">$${d.price}</td></tr>`;
+// ==== RETURNS TABLE ====
+function buildRetTable(){
+  const tb=document.getElementById('rtbl');
+  const f=(v,est)=>{
+    const c=v>=0?'gn':'rd';
+    const s=(v>=0?'+':'')+v.toFixed(1)+'%';
+    return `<span class="${c}">${s}</span>${est?' <span class="est">(E)</span>':''}`;
+  };
+  ANN.forEach(r=>{
+    const sp=(r.syk-r.spx).toFixed(1);
+    const spC=+sp>=0?'gn':'rd';
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td><strong>${r.yr}</strong></td>
+      <td>${f(r.syk,r.eS)}</td>
+      <td>${f(r.spx,false)}</td>
+      <td>${f(r.isrg,r.eI)}</td>
+      <td>${f(r.xlv,false)}</td>
+      <td>${f(r.mdt,r.eM)}</td>
+      <td class="${spC}" style="font-weight:700">${+sp>=0?'+':''}${sp}pp</td>
+      <td style="text-align:left;color:#666;font-style:italic;font-size:11.5px">${r.ctx}</td>`;
+    tb.appendChild(tr);
   });
-  h+='</tbody></table>';
-  document.getElementById('fundTable').innerHTML=h;
 }
 
-function renderReturnsTable(){
-  let h='<table><thead><tr>';
-  ['Year','CPAY','S&P 500','Visa (V)','XLF','vs. S&P','Context'].forEach((c,i)=>h+=`<th${i===6?' class="ctx"':''}>${c}</th>`);
-  h+='</tr></thead><tbody>';
-  yoyReturns.forEach(r=>{
-    h+=`<tr><td class="yr">${r.y}</td><td>${rv(r.c)}</td><td>${rv(r.s)}</td><td>${rv(r.v)}</td><td>${rv(r.x)}</td><td>${sp(r.c,r.s)}</td><td class="ctx">${r.ctx}</td></tr>`;
+// ==== CUMULATIVE TABLE ====
+function buildCumTable(){
+  const tb=document.getElementById('ctbl');
+  const f=v=>{const c=v>=0?'gn':'rd';return `<span class="${c}">${v>=0?'+':''}${v}%</span>`;};
+  CUM.forEach(r=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td><strong>${r.p}</strong></td>
+      <td style="font-weight:700">${f(r.syk)}</td>
+      <td>${f(r.spx)}</td>
+      <td>${f(r.isrg)}</td>
+      <td>${f(r.xlv)}</td>
+      <td>${f(r.mdt)}</td>
+      <td><span class="vrd ${r.vrd}">${r.vl}</span></td>`;
+    tb.appendChild(tr);
   });
-  h+='</tbody></table>';
-  document.getElementById('returnsTable').innerHTML=h;
 }
 
-function renderCumTable(){
-  let h='<table><thead><tr>';
-  ['Period','CPAY','S&P 500','Visa (V)','XLF','Verdict'].forEach(c=>h+=`<th>${c}</th>`);
-  h+='</tr></thead><tbody>';
-  cumReturns.forEach(r=>{
-    h+=`<tr><td class="yr">${r.p}</td><td class="gold">${r.c}</td><td>${r.s}</td><td>${r.v}</td><td>${r.x}</td><td style="text-align:center"><span class="badge ${r.vc}">${r.vd}</span></td></tr>`;
+// ==== TABS ====
+document.querySelectorAll('.tnb').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tnb').forEach(b=>b.classList.remove('on'));
+    document.querySelectorAll('.tcont').forEach(c=>c.classList.remove('on'));
+    btn.classList.add('on');
+    document.getElementById(btn.dataset.tab).classList.add('on');
   });
-  h+='</tbody></table>';
-  document.getElementById('cumTable').innerHTML=h;
-}
+});
 
-function renderMetrics(){
-  let h='';
-  metrics.forEach(m=>{h+=`<div class="metric"><div class="lbl">${m.l}</div><div class="val">${m.v}</div><div class="sub">${m.s}</div></div>`;});
-  document.getElementById('metricsGrid').innerHTML=h;
-}
-
-// --- NARRATIVE ---
-let activeSection='overview';
-function renderNav(){
-  let h='';
-  sections.forEach(s=>{h+=`<button class="${s.id===activeSection?'active':''}" onclick="setSection('${s.id}')">${s.t}</button>`;});
-  document.getElementById('navTabs').innerHTML=h;
-}
-function renderSection(){
-  const s=sections.find(x=>x.id===activeSection);
-  const ps=s.c.split('\n\n').map(p=>`<p>${p}</p>`).join('');
-  document.getElementById('sectionContent').innerHTML=`<h3>${s.t}</h3>${ps}`;
-}
-function setSection(id){activeSection=id;renderNav();renderSection();}
-
-// --- INIT ---
-window.addEventListener('DOMContentLoaded',()=>{
-  renderFundChart();renderIdxChart();
-  renderFundTable();renderReturnsTable();renderCumTable();
-  renderMetrics();renderNav();renderSection();
+// ==== INIT ====
+document.addEventListener('DOMContentLoaded',()=>{
+  initChart();
+  buildFundTable();
+  buildRetTable();
+  buildCumTable();
 });
 </script>
 </body>
